@@ -1,17 +1,17 @@
 package com.example.ridecellassignment.repository.dataRepositories
 
+import com.example.ridecellassignment.modals.LoginBody
 import com.example.ridecellassignment.modals.PojoError
+import com.example.ridecellassignment.modals.RegisterBody
 import com.example.ridecellassignment.repository.local.AppPreferences
 
 class LoginRepository(private val preferences: AppPreferences) : BaseDataRepository(preferences) {
 
     suspend fun userLogin(
-        userName: String, password: String, deviceId: String, deviceToken: String,
-        deviceType: String, onResult: (loginResp: Boolean?, error: PojoError?) -> Unit
+        login: LoginBody, onResult: (loginResp: Boolean?, error: PojoError?) -> Unit
     ) {
         try {
-            val response =
-                restClient.apiLoginUser(userName, password, deviceId, deviceToken, deviceType)
+            val response = restClient.apiLoginUser(login)
             if (response.isSuccessful && response.body() != null) {
                 preferences.loginUser(response.body())
                 onResult(response.isSuccessful, null)
@@ -24,15 +24,10 @@ class LoginRepository(private val preferences: AppPreferences) : BaseDataReposit
     }
 
     suspend fun userRegister(
-        name: String, email: String, password: String, userType: String, phoneNumber: String,
-        deviceId: String, deviceToken: String, deviceType: String, verifyCode: String,
-        onResult: (loginResp: Boolean?, error: PojoError?) -> Unit
+        registerBody: RegisterBody, onResult: (loginResp: Boolean?, error: PojoError?) -> Unit
     ) {
         try {
-            val response = restClient.apiRegister(
-                name, email, password, userType, phoneNumber, deviceId, deviceToken, deviceType,
-                verifyCode
-            )
+            val response = restClient.apiRegister(registerBody)
             if (response.isSuccessful && response.body() != null) {
                 onResult(response.isSuccessful, null)
             } else {

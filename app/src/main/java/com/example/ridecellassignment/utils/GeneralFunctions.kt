@@ -1,17 +1,7 @@
 package com.example.ridecellassignment.utils
 
-import android.content.Context
-import android.net.Uri
-import android.os.ParcelFileDescriptor
-import android.webkit.MimeTypeMap
-import com.example.ridecellassignment.modals.ChatActionModel
-import com.example.ridecellassignment.modals.MultiSelectModel
-import com.example.ridecellassignment.modals.ResourceStatus
-import java.io.*
-import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 object GeneralFunctions {
