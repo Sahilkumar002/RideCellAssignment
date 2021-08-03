@@ -9,4 +9,6 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
 
     private var viewBinding by autoCleared<FragmentSignUpBinding>()
 
+
+
 }
