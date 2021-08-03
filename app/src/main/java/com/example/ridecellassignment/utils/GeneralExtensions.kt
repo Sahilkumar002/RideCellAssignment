@@ -9,11 +9,15 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.annotation.DrawableRes
+import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
+import com.example.ridecellassignment.R
+import com.example.ridecellassignment.views.activities.BaseActivity
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -96,13 +100,44 @@ inline fun <reified T : AppCompatActivity> Context.launchActivity(finish: Boolea
 
 }
 
-inline fun <reified T : AppCompatActivity> Context.launchActivityClearAll(finish: Boolean? = null) {
-    startActivity(Intent(this, T::class.java).apply {
-        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-    })
-    finish?.let { if (it) (this as AppCompatActivity).finish() }
-
+fun Fragment.launchActivity(target: Class<out BaseActivity>, finish: Boolean? = null) {
+    this.activity?.let { act ->
+        this.startActivity(Intent(act, target))
+        finish?.let { if (it) act.finish() }
+    }
 }
+
+
+fun Fragment.addFragmentWithoutStack(
+    fm: FragmentManager?, tag: String, @IdRes container: Int? = null
+) {
+    fm?.beginTransaction()
+        ?.add(container ?: R.id.flContainer, this, tag)
+        ?.commit()
+}
+
+fun Fragment.addFragment(fm: FragmentManager?, tag: String, @IdRes container: Int? = null) {
+    fm?.beginTransaction()
+        ?.add(container ?: R.id.flContainer, this, tag)
+        ?.addToBackStack(tag)
+        ?.commit()
+}
+
+fun Fragment.replaceFragmentWithStack(
+    fm: FragmentManager?, tag: String, @IdRes container: Int? = null
+) {
+    fm?.beginTransaction()
+        ?.replace(container ?: R.id.flContainer, this, tag)
+        ?.addToBackStack(tag)
+        ?.commit()
+}
+
+fun Fragment.replaceFragment(fm: FragmentManager?, tag: String, @IdRes container: Int? = null) {
+    fm?.beginTransaction()
+        ?.replace(container ?: R.id.flContainer, this, tag)
+        ?.commit()
+}
+
 
 
 /* keyboard extensions */
