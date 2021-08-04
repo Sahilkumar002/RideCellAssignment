@@ -39,8 +39,6 @@ abstract class BaseLocationFragment(@LayoutRes layout: Int) : Fragment(layout) {
             } else {
                 showToast(getString(R.string.location_rt_permissions))
             }
-
-
         }
 
 
@@ -99,13 +97,18 @@ abstract class BaseLocationFragment(@LayoutRes layout: Int) : Fragment(layout) {
             val locationResult = fusedLocationProviderClient.lastLocation
             locationResult.addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
-                    task.result?.let { loc ->
-                        latitude = loc.latitude
-                        longitude = loc.longitude
+                    if (task.result != null) {
+                        task.result?.let { loc ->
+                            latitude = loc.latitude
+                            longitude = loc.longitude
+                            dragCameraToLocation()
+                            Log.e("current", "$latitude  ----   $longitude")
+                        }
+                    } else {
+                        /* drag to default location */
                         dragCameraToLocation()
-
-                        Log.e("current", "$latitude  ----   $longitude")
                     }
+
                 }
             }
 
@@ -129,7 +132,6 @@ abstract class BaseLocationFragment(@LayoutRes layout: Int) : Fragment(layout) {
             .create()
             .show()
     }
-
 
 
 }

@@ -16,6 +16,11 @@
 <!--        <item name="android:background">@color/black</item>-->
     </style>
 
+
+    <style name="screenBackground">
+        <item name="android:background">@color/black</item>
+
+    </style>
     <style name="tvLoginLabel">
         <item name="android:textColor">@color/white</item>
         <item name="android:padding">@dimen/dimen_4</item>

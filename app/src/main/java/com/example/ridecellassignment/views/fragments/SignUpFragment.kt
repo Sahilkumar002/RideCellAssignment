@@ -2,16 +2,14 @@ package com.example.ridecellassignment.views.fragments
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.ridecellassignment.R
 import com.example.ridecellassignment.databinding.FragmentLoginBinding
 import com.example.ridecellassignment.databinding.FragmentSignUpBinding
 import com.example.ridecellassignment.modals.RegisterBody
-import com.example.ridecellassignment.utils.autoCleared
-import com.example.ridecellassignment.utils.isValidEmail
-import com.example.ridecellassignment.utils.launchActivity
-import com.example.ridecellassignment.utils.showToast
+import com.example.ridecellassignment.utils.*
 import com.example.ridecellassignment.viewmodels.LoginViewModel
 import com.example.ridecellassignment.views.activities.HomeActivity
 
@@ -30,6 +28,35 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
         /* click listeners */
         viewBinding.btnSignUp.setOnClickListener { userSignUp() }
 
+        /* after view created */
+        viewBinding.etPassword.apply {
+            doAfterTextChanged { text ->
+                if (text != null) {
+                    when {
+                        text.isEmpty() || text.length <= 4 -> {
+                            viewBinding.llPasswordStrength.hide()
+                        }
+                        text.length <= 6 -> {
+                            showStrength(33, "Weak")
+                        }
+                        text.length <= 8 -> {
+                            showStrength(66, "Moderate")
+                        }
+                        text.length > 8 -> {
+                            showStrength(80, "Strong")
+                        }
+                    }
+                }
+            }
+            setOnFocusChangeListener { _, hasFocus -> if (!hasFocus) viewBinding.llPasswordStrength.hide() }
+        }
+
+    }
+
+    private fun showStrength(strength: Int, strengthValue: String) {
+        viewBinding.llPasswordStrength.show()
+        viewBinding.progressBar.progress = strength
+        viewBinding.tvPasswordStrength.text = String.format("Password Strength: %s", strengthValue)
 
     }
 
