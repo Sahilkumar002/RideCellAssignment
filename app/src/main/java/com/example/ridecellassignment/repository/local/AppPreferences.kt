@@ -2,9 +2,9 @@ package com.example.ridecellassignment.repository.local
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.example.ridecellassignment.modals.PojoLoginResponse
+import com.example.ridecellassignment.modals.PojoPersonData
 import com.google.gson.Gson
-import com.example.ridecellassignment.modals.PojoRegister
-import com.example.ridecellassignment.modals.PojoUserData
 import com.example.ridecellassignment.utils.AppGlobal
 
 private const val PREFS_FILE_NAME = "Ridecell_Assignment"
@@ -31,30 +31,27 @@ class AppPreferences private constructor(context: Context) {
         } else false
         set(value) = sharedPreferences.edit { it.putBoolean(PREFS_IS_LOGIN, value) }
 
-    var appLanguage: String
-        get() = sharedPreferences.getString(PREFS_APP_LANGUAGE, "en") ?: "en"
-        set(value) = sharedPreferences.edit { it.putString(PREFS_APP_LANGUAGE, value) }
 
     var sessionToken: String
         get() = sharedPreferences.getString(PREFS_AUTH_TOKEN, "") ?: ""
         set(value) = sharedPreferences.edit { it.putString(PREFS_AUTH_TOKEN, value) }
 
 
-    fun loginUser(loggedUser: PojoUserData?) {
-        loggedUser?.let { loginData ->
+    fun loginUser(logInData: PojoLoginResponse?) {
+        logInData?.let { loginData ->
             isAlreadyLogin = true
-            prefsLoggedUser = loginData
+            sessionToken = loginData.authentication_token
+            prefsLoggedUser = loginData.person
+            AppGlobal.AUTH_TOKEN = loginData.authentication_token
         }
     }
 
 
-
-    var prefsLoggedUser: PojoUserData?
+    var prefsLoggedUser: PojoPersonData?
         get() = if (sharedPreferences.contains(PREFS_USER)) {
-            Gson().fromJson(sharedPreferences.getString(PREFS_USER, ""), PojoUserData::class.java)
+            Gson().fromJson(sharedPreferences.getString(PREFS_USER, ""), PojoPersonData::class.java)
         } else null
         set(value) = sharedPreferences.edit { it.putString(PREFS_USER, Gson().toJson(value)) }
-
 
 
     fun clearPrefs() = sharedPreferences.edit {

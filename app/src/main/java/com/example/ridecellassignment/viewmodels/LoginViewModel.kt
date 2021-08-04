@@ -1,12 +1,12 @@
 package com.example.ridecellassignment.viewmodels
 
-import android.annotation.SuppressLint
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.ridecellassignment.modals.LoginBody
 import com.example.ridecellassignment.modals.PojoError
+import com.example.ridecellassignment.modals.RegisterBody
 import com.example.ridecellassignment.repository.dataRepositories.LoginRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -19,9 +19,19 @@ class LoginViewModel(application: Application) : BaseViewModel(application) {
         get() = _successLogin
     private val _successLogin: MutableLiveData<Boolean> by lazy { MutableLiveData() }
 
+    val successRegister: LiveData<Boolean>
+        get() = _successRegister
+    private val _successRegister: MutableLiveData<Boolean> by lazy { MutableLiveData() }
+
     val errorLogin: LiveData<PojoError>
         get() = _errorLogin
     private val _errorLogin: MutableLiveData<PojoError> by lazy { MutableLiveData() }
+
+    val errorRegister: LiveData<PojoError>
+        get() = _errorRegister
+    private val _errorRegister: MutableLiveData<PojoError> by lazy { MutableLiveData() }
+
+    fun isAlreadyLogin() = prefs.isAlreadyLogin
 
 
     fun userLogin(loginBody: LoginBody) {
@@ -40,23 +50,17 @@ class LoginViewModel(application: Application) : BaseViewModel(application) {
     }
 
 
-    fun userSignUp(
-        name: String?, email: String?, password: String?, confirmPassword: String?,
-        userType: String, phoneNumber: String?,
-    ) {
+    fun userSignUp(registerBody: RegisterBody) {
         viewModelScope.launch(Dispatchers.IO) {
             isLoading.postValue(true)
-//            loginRep.userRegister(
-//                name, email, password, userType, phoneNumber, deviceId, firebaseToken,
-//                deviceType, generatedPassword
-//            ) { response, error ->
-//                isLoading.postValue(false)
-//                if (response != null) {
-//                    registerSuccess.postValue(true)
-//                } else {
-//                    errorLiveData.postValue(error)
-//                }
-//            }
+            loginRep.userRegister(registerBody) { response, error ->
+                isLoading.postValue(false)
+                if (response != null) {
+                    _successRegister.postValue(true)
+                } else {
+                    _errorRegister.postValue(error)
+                }
+            }
             isLoading.postValue(false)
         }
     }

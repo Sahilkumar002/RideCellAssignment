@@ -3,7 +3,7 @@ package com.example.ridecellassignment.modals
 import androidx.annotation.Keep
 
 @Keep
-data class RetrofitError(val error_description: String, val error_code: Int)
+data class RetrofitError(val message: String, val error_code: Int)
 
 @Keep
 data class PojoError(
@@ -24,15 +24,19 @@ data class PojoError(
 data class PojoCommon(val message: String)
 
 @Keep
-data class PojoRegister(
-    val id: Int, val name: String, val email: String, var email_verified_at: String?,
-    val phone_number: String, val user_type: String, val is_active: Int, val is_block: Int,
-    val device_id: String, val device_token: String, val token: String
-)
-
-
-
-@Keep
 data class PojoUserData(
     val id: Int, var name: String, val user_type: String, var profile_image: String?,
 )
+
+
+@Keep
+data class PojoLoginResponse(
+    val authentication_token: String, var person: PojoPersonData
+)
+
+data class PojoPersonData(val display_name: String, val key: String, val role: PojoPersonRole)
+data class PojoPersonRole(val key: String, val rank: Int)
+
+
+
+

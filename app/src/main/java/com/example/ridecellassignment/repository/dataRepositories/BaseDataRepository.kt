@@ -28,7 +28,7 @@ abstract class BaseDataRepository(private val preferences: AppPreferences) {
         }
 
         error?.let {
-            retrofitError = PojoError(it.error_description, false)
+            retrofitError = PojoError(it.message, false)
             if (it.error_code == 401) {
                 preferences.clearPrefs()
             }

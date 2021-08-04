@@ -15,8 +15,8 @@ abstract class BaseActivity : AppCompatActivity() {
     private val progressDialog: Dialog by lazy {
         Dialog(this).apply {
             requestWindowFeature(Window.FEATURE_NO_TITLE)
-            window?.setBackgroundDrawableResource(android.R.color.transparent)
             setContentView(R.layout.dialog_progress)
+            window?.setBackgroundDrawableResource(android.R.color.transparent)
             setCancelable(false)
         }
     }

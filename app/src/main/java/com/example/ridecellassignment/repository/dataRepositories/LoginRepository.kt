@@ -29,6 +29,7 @@ class LoginRepository(private val preferences: AppPreferences) : BaseDataReposit
         try {
             val response = restClient.apiRegister(registerBody)
             if (response.isSuccessful && response.body() != null) {
+                preferences.loginUser(response.body())
                 onResult(response.isSuccessful, null)
             } else {
                 onResult(null, handleRetrofitError(response.code(), response.errorBody()))

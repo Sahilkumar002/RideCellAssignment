@@ -11,13 +11,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RideCellAssignment"
         android:usesCleartextTraffic="true">
-        <activity android:name=".views.activities.MainActivity">
+        <activity
+            android:name=".views.activities.MainActivity"
+            android:screenOrientation="nosensor">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".views.activities.HomeActivity"
+            android:screenOrientation="nosensor" />
     </application>
 
 </manifest>

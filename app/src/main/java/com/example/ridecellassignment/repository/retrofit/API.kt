@@ -1,9 +1,6 @@
 package com.example.ridecellassignment.repository.retrofit
 
-import com.example.ridecellassignment.modals.LoginBody
-import com.example.ridecellassignment.modals.PojoRegister
-import com.example.ridecellassignment.modals.PojoUserData
-import com.example.ridecellassignment.modals.RegisterBody
+import com.example.ridecellassignment.modals.*
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Field
@@ -21,13 +18,11 @@ private const val API_UNBLOCK = "contactUs"
 
 interface API {
 
-    @FormUrlEncoded
     @POST(API_LOGIN)
-    suspend fun apiLoginUser(@Body loginBody: LoginBody): Response<PojoUserData>
+    suspend fun apiLoginUser(@Body loginBody: LoginBody): Response<PojoLoginResponse>
 
-    @FormUrlEncoded
     @POST(API_REGISTER)
-    suspend fun apiRegister(@Body registerBody: RegisterBody): Response<PojoRegister>
+    suspend fun apiRegister(@Body registerBody: RegisterBody): Response<PojoLoginResponse>
 
 
 }

@@ -6,11 +6,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.ridecellassignment.R
 import com.example.ridecellassignment.databinding.FragmentLoginBinding
 import com.example.ridecellassignment.modals.LoginBody
-import com.example.ridecellassignment.utils.addFragment
-import com.example.ridecellassignment.utils.autoCleared
-import com.example.ridecellassignment.utils.isValidEmail
-import com.example.ridecellassignment.utils.showToast
+import com.example.ridecellassignment.utils.*
 import com.example.ridecellassignment.viewmodels.LoginViewModel
+import com.example.ridecellassignment.views.activities.HomeActivity
 
 class LoginFragment : BaseFragment(R.layout.fragment_login) {
 
@@ -28,16 +26,18 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
             SignUpFragment().addFragment(parentFragmentManager, getString(R.string.sign_up_instead))
         }
 
-        viewBinding.btnLogin.setOnClickListener {
-            if (checkForLoginValidation()) {
-                val loginBody = LoginBody(
-                    viewBinding.etEmail.text.toString().trim(),
-                    viewBinding.etPassword.text.toString().trim()
-                )
-                viewModel.userLogin(loginBody)
-            }
-        }
+        viewBinding.btnLogin.setOnClickListener { userSignIn() }
 
+    }
+
+    private fun userSignIn() {
+        if (checkForLoginValidation()) {
+            val loginBody = LoginBody(
+                viewBinding.etEmail.text.toString().trim(),
+                viewBinding.etPassword.text.toString().trim()
+            )
+            viewModel.userLogin(loginBody)
+        }
     }
 
     private fun observeViewModel() {
@@ -49,36 +49,33 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
         viewModel.successLogin.observe(viewLifecycleOwner) {
             if (it) {
                 showToast("Success login")
+                launchActivity(HomeActivity::class.java, true)
             }
         }
 
     }
 
     private fun checkForLoginValidation(): Boolean {
-        val emailString: String = viewBinding.etEmail.text.toString().trim()
-        val passwordString: String = viewBinding.etPassword.text.toString().trim()
         when {
-            emailString.isNullOrBlank() -> {
+            viewBinding.etEmail.text.toString().trim().isNullOrBlank() -> {
                 showToast("Invalid Email")
                 return false
             }
-            !emailString.isValidEmail() -> {
+            !viewBinding.etEmail.text.toString().trim().isValidEmail() -> {
                 showToast("Invalid Email")
                 return false
 
             }
-            passwordString.isNullOrBlank() -> {
+            viewBinding.etPassword.text.toString().trim().isNullOrBlank() -> {
                 showToast("Invalid Password")
                 return false
             }
-            passwordString.length < 7 -> {
+            viewBinding.etPassword.text.toString().trim().length < 7 -> {
                 showToast("weak password")
                 return false
             }
-
+            else -> return true
         }
-
-        return true
     }
 
 }
