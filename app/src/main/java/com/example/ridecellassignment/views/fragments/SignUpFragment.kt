@@ -2,6 +2,7 @@ package com.example.ridecellassignment.views.fragments
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.ridecellassignment.R
 import com.example.ridecellassignment.databinding.FragmentLoginBinding
@@ -17,7 +18,7 @@ import com.example.ridecellassignment.views.activities.HomeActivity
 class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
 
     private var viewBinding by autoCleared<FragmentSignUpBinding>()
-    private lateinit var viewModel: LoginViewModel
+    private val viewModel by viewModels<LoginViewModel>()
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -27,7 +28,6 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
         observeViewModel()
 
         /* click listeners */
-
         viewBinding.btnSignUp.setOnClickListener { userSignUp() }
 
 
@@ -78,7 +78,6 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
     }
 
     private fun observeViewModel() {
-        viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
 
         viewModel.isLoading.observe(viewLifecycleOwner) {
             if (it) showDialog() else hideDialog()

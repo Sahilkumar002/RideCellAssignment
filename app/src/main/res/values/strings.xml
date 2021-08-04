@@ -11,4 +11,6 @@
     <string name="login">Login</string>
     <string name="full_name">User Name</string>
     <string name="confirm_password">Confirm Password</string>
+    <string name="map">Map</string>
+    <string name="profile">Profile</string>
 </resources>
