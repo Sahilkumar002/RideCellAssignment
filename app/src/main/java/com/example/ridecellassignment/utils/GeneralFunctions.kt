@@ -1,5 +1,7 @@
 package com.example.ridecellassignment.utils
 
+import com.example.ridecellassignment.R
+import com.example.ridecellassignment.modals.PojoMapMarker
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -49,6 +51,14 @@ object GeneralFunctions {
         } else 0
         return "$days days"
     }
+
+
+    fun getMarkerLocations() = arrayListOf(
+        PojoMapMarker("Mumbai", 19.0760, 72.8777, R.drawable.ic_map_hospital),
+        PojoMapMarker("Delhi", 28.7041, 77.1025, R.drawable.ic_map_library),
+        PojoMapMarker("Kolkata", 22.5726, 88.3639, R.drawable.ic_map_restuarant),
+        PojoMapMarker("Chennai", 13.0827, 80.2707, R.drawable.ic_map_school)
+    )
 
 
 }

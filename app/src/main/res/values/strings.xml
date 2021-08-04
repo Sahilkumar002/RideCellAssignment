@@ -13,4 +13,7 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="map">Map</string>
     <string name="profile">Profile</string>
+    <string name="location_rt_permissions">Location Permission Required</string>
+    <string name="okay">Ok</string>
+    <string name="cancel_text">Cancel</string>
 </resources>
