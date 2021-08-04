@@ -34,11 +34,11 @@ object GeneralFunctions {
 
 
     fun calculateDays(startDate: String, dueDate: String? = null): String {
-        val dateStart = startDate.toDate(DATE_FORMAT_1)
+        val dateStart = startDate.toDate(DATE_FORMAT_2)
         val dateEnd: Date? = if (dueDate.isNullOrEmpty()) {
-            currentDate(DATE_FORMAT_1).toDate(DATE_FORMAT_1)
+            currentDate(DATE_FORMAT_2).toDate(DATE_FORMAT_2)
         } else {
-            dueDate.toDate(DATE_FORMAT_1)
+            dueDate.toDate(DATE_FORMAT_2)
         }
         val days = if (dateStart != null && dateEnd != null) {
             if (dateEnd.before(dateStart)) {

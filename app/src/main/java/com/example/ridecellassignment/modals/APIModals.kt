@@ -23,18 +23,19 @@ data class PojoError(
 @Keep
 data class PojoCommon(val message: String)
 
+
 @Keep
 data class PojoUserData(
-    val id: Int, var name: String, val user_type: String, var profile_image: String?,
+    val display_name: String, var email: String, val key: String, var role: PojoPersonRole,
+    val created_at: String, var updated_at: String
 )
 
 
 @Keep
-data class PojoLoginResponse(
-    val authentication_token: String, var person: PojoPersonData
-)
+data class PojoLoginResponse(val authentication_token: String, var person: PojoPersonData)
 
 data class PojoPersonData(val display_name: String, val key: String, val role: PojoPersonRole)
+
 data class PojoPersonRole(val key: String, val rank: Int)
 
 

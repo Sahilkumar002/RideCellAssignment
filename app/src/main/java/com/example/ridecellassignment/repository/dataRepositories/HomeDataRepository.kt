@@ -21,4 +21,22 @@ class HomeDataRepository(private val prefs: AppPreferences) : BaseDataRepository
     }
 
 
+    suspend fun updateProfile(
+        userKey: String, onResult: (result: Boolean?, error: PojoError?) -> Unit
+    ) {
+        try {
+            val response = restClient.apiGetUserProfile(userKey)
+            if (response.isSuccessful && null != response.body()) {
+                prefs.prefsUserProfile = response.body()
+                onResult(response.isSuccessful, null)
+            } else {
+                onResult(null, handleRetrofitError(response.code(), response.errorBody()))
+            }
+        } catch (e: Exception) {
+            onResult(null, PojoError(e, false))
+        }
+
+    }
+
+
 }

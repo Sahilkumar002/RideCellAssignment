@@ -29,43 +29,16 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
-const val CONNECTION_BROADCAST = "local_network_broadcast"
-const val CON_PARAM = "connection"
 
 
 const val DATE_FORMAT_1 = "yyyy-MM-dd"
-const val DATE_FORMAT_2 = "dd-MM-yyyy"
-const val DATE_FORMAT_3 = "yyyy-MM-dd HH:mm"
-const val DATE_FORMAT_4 = "dd-MM-yyyy HH:mm"
-const val DATE_FORMAT_5 = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-const val DATE_FORMAT_6 = "yyyy-MM-dd HH:mm:ss"
-const val DATE_FORMAT_7 = "hh:mm a"
-const val DATE_FORMAT_8 = "yyyy-MM-dd  hh:mm a"
+const val DATE_FORMAT_2 = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
 
 
 val TZ_UTC = TimeZone.getTimeZone("UTC")
 val MY_TYZ = TimeZone.getDefault()
 
 
-
-/* retrofit extensions */
-fun String.retrofitPart(partName: String, fileType: String?): MultipartBody.Part {
-    val testFile: File = File(this)
-    val mediaType = fileType?.toMediaTypeOrNull()
-    val fileBody: RequestBody =
-        testFile.asRequestBody(mediaType ?: ("image/png").toMediaTypeOrNull())
-    return MultipartBody.Part.createFormData(partName, testFile.name, fileBody)
-}
-
-fun File.retrofitPart(partName: String, fileType: String?): MultipartBody.Part {
-    val fileBody: RequestBody = this.asRequestBody(fileType?.toMediaTypeOrNull())
-    return MultipartBody.Part.createFormData(partName, this.name, fileBody)
-}
-
-
-fun String.retrofitPart(): RequestBody {
-    return this.toRequestBody("multipart/form-data".toMediaTypeOrNull())
-}
 
 fun String.isValidEmail(): Boolean {
     return !TextUtils.isEmpty(this) && android.util.Patterns.EMAIL_ADDRESS.matcher(this).matches()

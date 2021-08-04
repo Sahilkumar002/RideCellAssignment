@@ -15,10 +15,7 @@ class AppGlobal : Application() {
         super.onCreate()
         AUTH_TOKEN = prefs.sessionToken
 
-
     }
-
-
 
 
 }

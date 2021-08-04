@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'com.google.secrets_gradle_plugin' version '0.5'
 }
 
 android {
@@ -58,6 +59,10 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$viewmodel_scope_version"
     implementation "androidx.lifecycle:lifecycle-common-java8:$viewmodel_scope_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$viewmodel_scope_version"
+
+    implementation 'com.google.android.gms:play-services-maps:17.0.1'
+    implementation 'com.google.maps.android:maps-ktx:3.0.0'
+    implementation 'com.google.android.gms:play-services-location:18.0.0'
 
 
     testImplementation 'junit:junit:4.13.2'

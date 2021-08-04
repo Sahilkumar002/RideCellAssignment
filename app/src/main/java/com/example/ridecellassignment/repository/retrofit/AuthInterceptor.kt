@@ -10,10 +10,7 @@ class AuthInterceptor : Interceptor {
         val requestBuilder = original.newBuilder()
             .header("Authorization", AppGlobal.AUTH_TOKEN)
             .header("Content-Type", "application/json")
-        /*  Log.e(
-              "Auth token", if (AppGlobal.AUTH_TOKEN.isNotBlank())
-                  String.format("%s %s", "Bearer", AppGlobal.AUTH_TOKEN) else "Empty AuthToken"
-          )*/
+
         val request = requestBuilder.build()
         return chain.proceed(request)
     }
